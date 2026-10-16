@@ -1,6 +1,6 @@
 import {
   collection, addDoc, updateDoc, getDocs, doc,
-  query, where, orderBy, serverTimestamp, getCountFromServer,
+  query, where, serverTimestamp, getCountFromServer,
 } from "firebase/firestore";
 import { db } from "../firebase/config";
 
@@ -21,13 +21,16 @@ export async function returnBook(rentalId) {
   });
 }
 
+// No orderBy — sort in JS to avoid composite index requirement
 export async function getUserRentals(userId) {
   const snap = await getDocs(
-    query(collection(db, COL), where("userId", "==", userId), orderBy("borrowedAt", "desc"))
+    query(collection(db, COL), where("userId", "==", userId))
   );
-  return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+  const docs = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+  return docs.sort((a, b) => (b.borrowedAt?.seconds || 0) - (a.borrowedAt?.seconds || 0));
 }
 
+// Check if user already borrowed this book (active)
 export async function isBookBorrowed(userId, bookId) {
   const snap = await getDocs(
     query(
@@ -40,14 +43,22 @@ export async function isBookBorrowed(userId, bookId) {
   return !snap.empty;
 }
 
-export async function getAllRentals() {
+// Get all borrowed bookIds for a user (active only) — used in BorrowPage
+export async function getUserActiveBorrowedIds(userId) {
   const snap = await getDocs(
-    query(collection(db, COL), orderBy("borrowedAt", "desc"))
+    query(collection(db, COL), where("userId", "==", userId), where("status", "==", "active"))
   );
-  return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+  return snap.docs.map((d) => d.data().bookId);
 }
 
-// Fast count — only active rentals
+// Admin: get all rentals, sort in JS
+export async function getAllRentals() {
+  const snap = await getDocs(collection(db, COL));
+  const docs = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+  return docs.sort((a, b) => (b.borrowedAt?.seconds || 0) - (a.borrowedAt?.seconds || 0));
+}
+
+// Fast count of active rentals
 export async function getActiveRentalsCount() {
   const snap = await getCountFromServer(
     query(collection(db, COL), where("status", "==", "active"))

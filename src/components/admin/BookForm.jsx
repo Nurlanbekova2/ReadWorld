@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { useLang } from "../../i18n/index.jsx";
 import { uploadBookCover } from "../../utils/uploadImage";
+import { localizeBook } from "../../utils/localizeBook";
 import { FiUploadCloud, FiX, FiStar, FiCheck } from "react-icons/fi";
 
 const CATEGORY_KEYS = [
@@ -12,7 +13,7 @@ const CATEGORY_KEYS = [
 
 export default function BookForm({ defaultValues = {}, onSubmit, loading }) {
   const { register, handleSubmit, formState: { errors }, setValue } = useForm({ defaultValues });
-  const { t } = useLang();
+  const { lang, t } = useLang();
   const [imagePreview,    setImagePreview]    = useState(defaultValues.imageUrl || null);
   const [uploadProgress,  setUploadProgress]  = useState(0);
   const [uploading,       setUploading]       = useState(false);
@@ -164,6 +165,40 @@ export default function BookForm({ defaultValues = {}, onSubmit, loading }) {
             {errors.author && <p className="text-xs text-red-500 mt-1">{errors.author.message}</p>}
           </div>
 
+          <details className="rounded-xl border border-gray-200 dark:border-dark-border p-4">
+            <summary className="cursor-pointer text-sm font-semibold text-gray-700 dark:text-dark-text">
+              {t.bookForm.translationsTitle}
+            </summary>
+            <p className="mt-2 text-xs text-gray-500 dark:text-dark-muted">
+              {t.bookForm.translationsHint}
+            </p>
+            {["ru", "ky"].map((translationLanguage) => (
+              <fieldset key={translationLanguage} className="mt-4 space-y-3">
+                <legend className="mb-2 text-sm font-semibold text-primary-600">
+                  {t.bookForm.languages[translationLanguage]}
+                </legend>
+                <input
+                  type="text"
+                  placeholder={t.bookForm.titleLabel}
+                  className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary-400 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text"
+                  {...register(`translations.${translationLanguage}.title`)}
+                />
+                <input
+                  type="text"
+                  placeholder={t.bookForm.authorLabel}
+                  className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary-400 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text"
+                  {...register(`translations.${translationLanguage}.author`)}
+                />
+                <textarea
+                  rows={3}
+                  placeholder={t.bookForm.descriptionLabel}
+                  className="w-full resize-none rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary-400 dark:border-dark-border dark:bg-dark-bg dark:text-dark-text"
+                  {...register(`translations.${translationLanguage}.description`)}
+                />
+              </fieldset>
+            ))}
+          </details>
+
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-dark-text mb-1.5">{t.bookForm.categoryLabel} *</label>
@@ -172,7 +207,13 @@ export default function BookForm({ defaultValues = {}, onSubmit, loading }) {
                   (errors.category ? "border-red-400" : "border-gray-200 dark:border-dark-border")}
                 {...register("category", { required: t.bookForm.errors.categoryRequired })}>
                 <option value="">{t.bookForm.categoryPlaceholder}</option>
-                {CATEGORY_KEYS.map((c) => <option key={c} value={c}>{c}</option>)}
+                {CATEGORY_KEYS.map((c) => (
+                  <option key={c} value={c}>
+                    {c === "Other"
+                      ? t.bookForm.otherCategory
+                      : localizeBook({ category: c }, lang, t).category}
+                  </option>
+                ))}
               </select>
               {errors.category && <p className="text-xs text-red-500 mt-1">{errors.category.message}</p>}
             </div>

@@ -124,7 +124,7 @@ export default function AdminDashboard() {
                       <td className="px-6 py-3">
                         {book.imageUrl
                           ? <img src={book.imageUrl} alt={book.title} className="w-9 h-12 object-cover rounded-lg" />
-                          : <div className="w-9 h-12 bg-primary-50 dark:bg-primary-900/20 rounded-lg flex items-center justify-center text-lg">📚</div>
+                          : <div className="w-9 h-12 bg-primary-50 dark:bg-primary-900/20 rounded-lg flex items-center justify-center"><FiBookOpen className="text-primary-500" /></div>
                         }
                       </td>
                       <td className="px-6 py-3 font-medium text-gray-800 dark:text-dark-text line-clamp-1 max-w-[160px]">{book.title}</td>

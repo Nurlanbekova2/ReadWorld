@@ -126,7 +126,7 @@ export default function MyRentals() {
 
         {rentals.length === 0 ? (
           <div className="text-center py-20">
-            <div className="text-6xl mb-4">📖</div>
+            <FiBookOpen className="mx-auto mb-4 text-gray-300" size={64} aria-hidden="true" />
             <h3 className="text-xl font-semibold text-gray-700 dark:text-dark-text mb-2">{t.rental.noRentals}</h3>
             <p className="text-gray-500 dark:text-dark-muted mb-6">{t.rental.noRentalsDesc}</p>
             <Link to="/" className="px-6 py-3 rounded-xl bg-primary-600 hover:bg-primary-700 text-white font-medium transition">

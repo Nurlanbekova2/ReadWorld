@@ -5,7 +5,7 @@ import { useLang } from "../../i18n/index.jsx";
 import Spinner from "../../components/ui/Spinner";
 import ConfirmModal from "../../components/ui/ConfirmModal";
 import StarRating from "../../components/ui/StarRating";
-import { FiEdit2, FiTrash2, FiPlusCircle, FiSearch, FiFilter } from "react-icons/fi";
+import { FiEdit2, FiTrash2, FiPlusCircle, FiSearch, FiFilter, FiBookOpen, FiInbox } from "react-icons/fi";
 import { format } from "date-fns";
 import toast from "react-hot-toast";
 
@@ -106,7 +106,7 @@ export default function AdminBooks() {
                   <td className="px-5 py-3">
                     {book.imageUrl
                       ? <img src={book.imageUrl} alt={book.title} className="w-10 h-13 object-cover rounded-lg shadow-sm" />
-                      : <div className="w-10 h-13 bg-primary-50 dark:bg-primary-900/20 rounded-lg flex items-center justify-center">📚</div>
+                      : <div className="w-10 h-13 bg-primary-50 dark:bg-primary-900/20 rounded-lg flex items-center justify-center"><FiBookOpen className="text-primary-500" /></div>
                     }
                   </td>
                   <td className="px-5 py-3 font-medium text-gray-800 dark:text-dark-text line-clamp-2 max-w-[160px]">{book.title}</td>
@@ -135,7 +135,7 @@ export default function AdminBooks() {
           </table>
           {filtered.length === 0 && (
             <div className="text-center py-16 text-gray-400">
-              <div className="text-5xl mb-3">📭</div>
+              <FiInbox className="mx-auto mb-3 text-gray-300" size={48} aria-hidden="true" />
               <p>{t.adminBooks.noBooks}</p>
             </div>
           )}

@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
+import { FiBookOpen } from "react-icons/fi";
 import { AuthProvider } from "./context/AuthContext";
 import { LangProvider } from "./i18n/index.jsx";
 
@@ -7,13 +8,17 @@ import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
 import { ProtectedRoute, AdminRoute } from "./components/layout/ProtectedRoute";
 import AdminLayout from "./components/admin/AdminLayout";
+import DraggableMascot from "./components/ui/DraggableMascot";
 
 import Home        from "./pages/user/Home";
+import Books       from "./pages/user/Books";
 import Login       from "./pages/user/Login";
 import Register    from "./pages/user/Register";
 import BookDetails from "./pages/user/BookDetails";
 import Favorites   from "./pages/user/Favorites";
-import MyRentals   from "./pages/user/MyRentals";
+import MyRentals        from "./pages/user/MyRentals";
+import ReadingTracker   from "./pages/user/ReadingTracker";
+import Profile          from "./pages/user/Profile";
 
 import AdminLogin     from "./pages/admin/AdminLogin";
 import AdminDashboard from "./pages/admin/AdminDashboard";
@@ -36,7 +41,7 @@ function UserLayout({ children }) {
 function NotFound() {
   return (
     <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-4">
-      <div className="text-8xl mb-4">📚</div>
+      <FiBookOpen className="mb-4 text-primary-500" size={72} aria-hidden="true" />
       <h1 className="text-3xl font-bold text-gray-800 dark:text-dark-text mb-2">Page Not Found</h1>
       <p className="text-gray-500 dark:text-dark-muted mb-6">The page you are looking for does not exist.</p>
       <a href="/" className="px-6 py-3 rounded-xl bg-primary-600 hover:bg-primary-700 text-white font-medium transition">Back to Home</a>
@@ -51,10 +56,11 @@ export default function App() {
         <AuthProvider>
           <Toaster position="top-right"
             toastOptions={{ duration: 3500, style: { borderRadius: "12px", fontSize: "14px", fontWeight: 500 } }} />
+          <DraggableMascot />
           <Routes>
             {/* Public */}
             <Route path="/"          element={<UserLayout><Home /></UserLayout>} />
-            <Route path="/books"     element={<UserLayout><Home /></UserLayout>} />
+            <Route path="/books"     element={<UserLayout><Books /></UserLayout>} />
             <Route path="/books/:id" element={<UserLayout><BookDetails /></UserLayout>} />
             <Route path="/login"     element={<Login />} />
             <Route path="/register"  element={<Register />} />
@@ -62,6 +68,8 @@ export default function App() {
             {/* Protected user */}
             <Route path="/favorites" element={<ProtectedRoute><UserLayout><Favorites /></UserLayout></ProtectedRoute>} />
             <Route path="/rentals"   element={<ProtectedRoute><UserLayout><MyRentals /></UserLayout></ProtectedRoute>} />
+            <Route path="/reading"   element={<ProtectedRoute><UserLayout><ReadingTracker /></UserLayout></ProtectedRoute>} />
+            <Route path="/profile"   element={<ProtectedRoute><UserLayout><Profile /></UserLayout></ProtectedRoute>} />
 
             {/* Admin */}
             <Route path="/admin/login" element={<AdminLogin />} />

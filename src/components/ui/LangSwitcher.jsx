@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useLang } from "../../i18n/index.jsx";
-import { FiSun, FiMoon } from "react-icons/fi";
+import { FiChevronDown, FiSun, FiMoon } from "react-icons/fi";
 
 const LANGS = [
-  { code: "ky", label: "KY", flag: "🇰🇬" },
-  { code: "ru", label: "RU", flag: "🇷🇺" },
-  { code: "en", label: "EN", flag: "🇬🇧" },
+  { code: "ky", label: "Кыргызча" },
+  { code: "ru", label: "Русский" },
+  { code: "en", label: "English" },
 ];
 
 export default function LangAndTheme({ compact = false }) {
@@ -19,23 +19,19 @@ export default function LangAndTheme({ compact = false }) {
 
   return (
     <div className="flex items-center gap-0.5 bg-gray-100 dark:bg-dark-bg rounded-xl p-1">
-      {/* Language buttons */}
-      {LANGS.map((l) => (
-        <button
-          key={l.code}
-          onClick={() => changeLang(l.code)}
-          title={l.label}
-          className={
-            "flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all duration-150 " +
-            (lang === l.code
-              ? "bg-primary-600 text-white shadow-sm scale-105"
-              : "text-gray-500 dark:text-dark-muted hover:bg-white dark:hover:bg-dark-surface hover:text-gray-700 dark:hover:text-dark-text")
-          }
+      <label className="relative flex items-center">
+        <span className="sr-only">Language</span>
+        <select
+          value={lang}
+          onChange={(event) => changeLang(event.target.value)}
+          className="appearance-none cursor-pointer bg-white dark:bg-dark-surface text-gray-700 dark:text-dark-text rounded-lg py-1.5 pl-2.5 pr-7 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-primary-400"
         >
-          <span>{l.flag}</span>
-          {!compact && <span>{l.label}</span>}
-        </button>
-      ))}
+          {LANGS.map((language) => (
+            <option key={language.code} value={language.code}>{language.label}</option>
+          ))}
+        </select>
+        <FiChevronDown className="absolute right-2 pointer-events-none text-gray-500 dark:text-dark-muted" size={13} />
+      </label>
 
       {/* Divider */}
       <div className="w-px h-5 bg-gray-300 dark:bg-dark-border mx-1" />

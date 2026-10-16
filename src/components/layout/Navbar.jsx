@@ -3,7 +3,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { useLang } from "../../i18n/index.jsx";
 import LangAndTheme from "../ui/LangSwitcher";
-import { FiBook, FiHeart, FiUser, FiLogOut, FiMenu, FiX, FiSearch, FiBookOpen } from "react-icons/fi";
+import { FiBook, FiHeart, FiUser, FiLogOut, FiMenu, FiX, FiSearch, FiBookOpen, FiPlayCircle, FiTool } from "react-icons/fi";
 import toast from "react-hot-toast";
 
 export default function Navbar() {
@@ -27,7 +27,7 @@ export default function Navbar() {
   function handleSearch(e) {
     e.preventDefault();
     if (searchQuery.trim()) {
-      navigate("/?search=" + encodeURIComponent(searchQuery.trim()));
+      navigate("/books?search=" + encodeURIComponent(searchQuery.trim()));
       setMenuOpen(false);
     }
   }
@@ -90,6 +90,10 @@ export default function Navbar() {
                 <Link to="/rentals" title={t.nav.rentals}
                   className="p-2 rounded-lg text-gray-500 dark:text-dark-muted hover:text-primary-600 hover:bg-primary-50 dark:hover:bg-primary-900/20 transition">
                   <FiBookOpen size={18} />
+                </Link>
+                <Link to="/reading" title={t.nav.reading}
+                  className="p-2 rounded-lg text-gray-500 dark:text-dark-muted hover:text-purple-600 hover:bg-purple-50 dark:hover:bg-purple-900/20 transition">
+                  <FiPlayCircle size={18} />
                 </Link>
                 {isAdmin && (
                   <Link to="/admin"
@@ -171,16 +175,20 @@ export default function Navbar() {
               <>
                 <Link to="/favorites" onClick={() => setMenuOpen(false)}
                   className="block px-3 py-2 rounded-lg text-sm text-gray-700 dark:text-dark-text hover:bg-gray-50 dark:hover:bg-dark-bg">
-                  ❤️ {t.nav.favorites}
+                  <FiHeart className="mr-2 inline-block" aria-hidden="true" /> {t.nav.favorites}
                 </Link>
                 <Link to="/rentals" onClick={() => setMenuOpen(false)}
                   className="block px-3 py-2 rounded-lg text-sm text-gray-700 dark:text-dark-text hover:bg-gray-50 dark:hover:bg-dark-bg">
-                  📖 {t.nav.rentals}
+                  <FiBookOpen className="mr-2 inline-block" aria-hidden="true" /> {t.nav.rentals}
+                </Link>
+                <Link to="/reading" onClick={() => setMenuOpen(false)}
+                  className="block px-3 py-2 rounded-lg text-sm text-gray-700 dark:text-dark-text hover:bg-gray-50 dark:hover:bg-dark-bg">
+                  <FiPlayCircle className="mr-2 inline-block" aria-hidden="true" /> {t.nav.reading}
                 </Link>
                 {isAdmin && (
                   <Link to="/admin" onClick={() => setMenuOpen(false)}
                     className="block px-3 py-2 rounded-lg text-sm font-semibold text-primary-600">
-                    🛠 {t.nav.admin}
+                    <FiTool className="mr-2 inline-block" aria-hidden="true" /> {t.nav.admin}
                   </Link>
                 )}
                 <button onClick={handleLogout}
