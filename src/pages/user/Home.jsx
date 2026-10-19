@@ -121,7 +121,7 @@ export default function Home() {
               640: { slidesPerView: 4 },
               1024: { slidesPerView: 6 },
             }}
-            className="!pb-10"
+            className="genres-swiper !pb-10"
           >
             {FEATURED_CATS.map(({ key, Icon }) => (
               <SwiperSlide key={key} className="!flex !h-auto">

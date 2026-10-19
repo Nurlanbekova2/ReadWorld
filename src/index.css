@@ -50,6 +50,26 @@
   }
 }
 
+.genres-swiper .swiper-button-prev,
+.genres-swiper .swiper-button-next {
+  top: 25%;
+  width: 24px;
+  height: 24px;
+  margin-top: 0;
+  color: #2563eb;
+}
+
+.genres-swiper .swiper-button-prev::after,
+.genres-swiper .swiper-button-next::after {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.dark .genres-swiper .swiper-button-prev,
+.dark .genres-swiper .swiper-button-next {
+  color: #60a5fa;
+}
+
 .line-clamp-1 {
   overflow: hidden;
   display: -webkit-box;
