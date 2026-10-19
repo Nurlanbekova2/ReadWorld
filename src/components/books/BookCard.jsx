@@ -40,8 +40,8 @@ export default function BookCard({ book, isFav = false, onFavChange }) {
   }
 
   return (
-    <Link to={`/books/${book.id}`} className="group block">
-      <div className="bg-white dark:bg-dark-surface rounded-2xl shadow-sm hover:shadow-xl border border-gray-100 dark:border-dark-border overflow-hidden transition-all duration-300 hover:-translate-y-1">
+    <Link to={`/books/${book.id}`} className="group block h-full">
+      <div className="flex h-full flex-col bg-white dark:bg-dark-surface rounded-2xl shadow-sm hover:shadow-xl border border-gray-100 dark:border-dark-border overflow-hidden transition-all duration-300 hover:-translate-y-1">
         <div className="relative aspect-[3/4] overflow-hidden bg-gray-100 dark:bg-dark-bg">
           {book.imageUrl ? (
             <img src={book.imageUrl} alt={book.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
@@ -59,12 +59,17 @@ export default function BookCard({ book, isFav = false, onFavChange }) {
             <span className="absolute top-3 left-3 px-2.5 py-0.5 text-xs font-semibold rounded-full bg-primary-600 text-white shadow">{localizedBook.category}</span>
           )}
         </div>
-        <div className="p-4">
+        <div className="flex flex-1 flex-col p-4">
           <h3 className="font-semibold text-gray-900 dark:text-dark-text line-clamp-1 group-hover:text-primary-600 transition-colors">{localizedBook.title}</h3>
           <p className="text-sm text-gray-500 dark:text-dark-muted mt-0.5 line-clamp-1">{localizedBook.author}</p>
-          <div className="flex items-center justify-between mt-3">
+          <div className="mt-2">
             <StarRating rating={book.rating || 0} size={13} showValue />
-            <span className="text-primary-600 dark:text-primary-400 font-bold text-base">{Number(book.price || 0).toFixed(0)} сом</span>
+          </div>
+          <div className="mt-auto flex justify-end pt-1">
+            <span className="inline-flex items-baseline gap-1 whitespace-nowrap text-primary-600 dark:text-primary-400 font-bold text-base">
+              {Number(book.price || 0).toFixed(0)}
+              <span>сом</span>
+            </span>
           </div>
         </div>
       </div>

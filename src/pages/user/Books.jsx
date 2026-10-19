@@ -15,7 +15,7 @@ import toast from "react-hot-toast";
 const ALL_CATEGORIES = [
   "All","Fiction","Non-Fiction","Science","Technology","History",
   "Biography","Fantasy","Mystery","Romance","Comedy","Drama",
-  "Horror","Thriller","Adventure","Psychology","Philosophy","Poetry",
+  "Horror","Thriller","Adventure","Psychology","Philosophy","Poetry","Other",
 ];
 const CATEGORY_DICTIONARIES = [en, ru, ky];
 

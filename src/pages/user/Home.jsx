@@ -5,25 +5,36 @@ import { useAuth } from "../../context/AuthContext";
 import { useLang } from "../../i18n/index.jsx";
 import BookCard from "../../components/books/BookCard";
 import Spinner from "../../components/ui/Spinner";
+import { A11y, Autoplay, Navigation, Pagination } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 import {
   FiAperture, FiArchive, FiArrowRight, FiActivity, FiBook, FiBookOpen,
-  FiCompass, FiEye, FiFeather, FiFilm, FiGrid, FiHeart, FiMonitor,
+  FiCompass, FiEye, FiFeather, FiFilm, FiGrid, FiHeart, FiMonitor, FiSearch,
   FiSmile, FiStar, FiTrendingUp, FiUser, FiUsers, FiZap,
 } from "react-icons/fi";
 
 const FEATURED_CATS = [
-  { key: "Fiction",    Icon: FiFeather },
-  { key: "Fantasy",    Icon: FiAperture },
-  { key: "Horror",     Icon: FiEye },
-  { key: "Comedy",     Icon: FiSmile },
-  { key: "Drama",      Icon: FiFilm },
-  { key: "Thriller",   Icon: FiZap },
-  { key: "Romance",    Icon: FiHeart },
-  { key: "Adventure",  Icon: FiCompass },
-  { key: "Science",    Icon: FiActivity },
-  { key: "Technology", Icon: FiMonitor },
-  { key: "History",    Icon: FiArchive },
-  { key: "Biography",  Icon: FiUser },
+  { key: "Fiction",     Icon: FiFeather },
+  { key: "Non-Fiction", Icon: FiBookOpen },
+  { key: "Science",     Icon: FiActivity },
+  { key: "Technology",  Icon: FiMonitor },
+  { key: "History",     Icon: FiArchive },
+  { key: "Biography",   Icon: FiUser },
+  { key: "Fantasy",     Icon: FiAperture },
+  { key: "Mystery",     Icon: FiSearch },
+  { key: "Romance",     Icon: FiHeart },
+  { key: "Comedy",      Icon: FiSmile },
+  { key: "Drama",       Icon: FiFilm },
+  { key: "Horror",      Icon: FiEye },
+  { key: "Thriller",    Icon: FiZap },
+  { key: "Adventure",   Icon: FiCompass },
+  { key: "Psychology",  Icon: FiUsers },
+  { key: "Philosophy",  Icon: FiStar },
+  { key: "Poetry",      Icon: FiFeather },
+  { key: "Other",       Icon: FiGrid },
 ];
 
 export default function Home() {
@@ -98,17 +109,32 @@ export default function Home() {
               {t.viewAll} <FiArrowRight size={14} />
             </Link>
           </div>
-          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3">
+          <Swiper
+            modules={[A11y, Autoplay, Navigation, Pagination]}
+            navigation
+            pagination={{ clickable: true }}
+            autoplay={{ delay: 3000, disableOnInteraction: false, pauseOnMouseEnter: true }}
+            loop
+            spaceBetween={12}
+            slidesPerView={2}
+            breakpoints={{
+              640: { slidesPerView: 4 },
+              1024: { slidesPerView: 6 },
+            }}
+            className="!pb-10"
+          >
             {FEATURED_CATS.map(({ key, Icon }) => (
-              <Link key={key} to={"/books?category=" + key}
-                className="flex flex-col items-center gap-2 p-4 rounded-2xl bg-white dark:bg-dark-surface border border-gray-100 dark:border-dark-border hover:border-primary-300 hover:shadow-md hover:-translate-y-0.5 transition-all group">
-                <Icon className="text-primary-500 group-hover:scale-110 transition-transform" size={30} aria-hidden="true" />
-                <span className="text-xs font-semibold text-gray-600 dark:text-dark-muted group-hover:text-primary-600 text-center leading-tight">
-                  {t.home.categories[key.toLowerCase()] || key}
-                </span>
-              </Link>
+              <SwiperSlide key={key} className="!flex !h-auto">
+                <Link to={"/books?category=" + key}
+                  className="flex min-h-28 w-full flex-col items-center justify-center gap-2 p-4 rounded-2xl bg-white dark:bg-dark-surface border border-gray-100 dark:border-dark-border hover:border-primary-300 hover:shadow-md hover:-translate-y-0.5 transition-all group">
+                  <Icon className="text-primary-500 group-hover:scale-110 transition-transform" size={30} aria-hidden="true" />
+                  <span className="text-xs font-semibold text-gray-600 dark:text-dark-muted group-hover:text-primary-600 text-center leading-tight">
+                    {t.home.categories[key.toLowerCase()] || key}
+                  </span>
+                </Link>
+              </SwiperSlide>
             ))}
-          </div>
+          </Swiper>
         </section>
 
         {/* Top rated */}
