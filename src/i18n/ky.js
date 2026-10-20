@@ -55,6 +55,13 @@ const ky = {
   confirm: "Ырастоо",
   close: "Жабуу",
   status: "Статус",
+  language: "Тил",
+  locked: "Кулпуланган",
+  notFound: {
+    title: "Барак табылган жок",
+    description: "Сиз издеп жаткан барак жок.",
+    home: "Башкы бетке кайтуу",
+  },
 
   nav: {
     home: "Башкы бет",
@@ -69,6 +76,9 @@ const ky = {
     profile: "Профиль",
     searchPlaceholder: "Китептерди, авторлорду издөө...",
     darkMode: "Түнкү режим",
+    lightMode: "Жарык тема",
+    light: "Жарык",
+    dark: "Караңгы",
     go: "Издөө",
   },
 
@@ -299,6 +309,7 @@ const ky = {
 
   admin: {
     dashboard: "Башкаруу тактасы",
+    adminRole: "Администратор",
     manageBooks: "Китептерди башкаруу",
     addBook: "Китеп кошуу",
     users: "Колдонуучулар",
@@ -311,6 +322,12 @@ const ky = {
     totalReviews: "Жалпы пикирлер",
     totalRentals: "Активдүү арендалар",
     recentBooks: "Акыркы кошулган китептер",
+    importKyrgyzBooks: "50 китептик топтомду жаңыртуу",
+    importKyrgyzBooksTitle: "Китептер топтомун жаңыртуу",
+    importKyrgyzBooksPrompt: "Поллианна жана «Сынган кылыч» сыяктуу белгилүү 50 китеп кошулат. Мурунку топтомдогу китептердин ID'лери өзгөрбөй жаңыртылат; мукабалар түзүлбөйт. Баалар 300, 250 жана 450 сом болуп кезектешет.",
+    importKyrgyzBooksSuccess: "Даяр: {added} кошулду, {updated} жаңыртылды, {skipped} каталогдо бар.",
+    importKyrgyzBooksFailed: "Китептерди импорттоо мүмкүн болгон жок. Интернетти жана уруксаттарды текшериңиз.",
+    importingKyrgyzBooks: "Китептер жаңыртылууда...",
   },
 
   adminBooks: {
@@ -340,7 +357,7 @@ const ky = {
     authorPlaceholder: "Автордун аты",
     categoryLabel: "Категория",
     categoryPlaceholder: "Тандаңыз...",
-    priceLabel: "Баасы ($)",
+    priceLabel: "Баасы (сом)",
     pricePlaceholder: "500",
     ratingLabel: "Рейтинг",
     descriptionLabel: "Сүрөттөмө",
@@ -351,6 +368,9 @@ const ky = {
     otherCategory: "Башка",
     saving: "Сакталуудa...",
     uploading: "Сүрөт жүктөлүүдө...",
+    uploadingProgress: "Жүктөлүүдө...",
+    imageReady: "Сүрөт даяр",
+    coverPreview: "Китеп мукабасынын алдын ала көрүнүшү",
     saveBook: "Китепти сактоо",
     addSuccess: "Китеп ийгиликтүү кошулду!",
     addFailed: "Китеп кошуудa ката",

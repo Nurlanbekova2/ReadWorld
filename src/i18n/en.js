@@ -55,6 +55,13 @@ const en = {
   confirm: "Confirm",
   close: "Close",
   status: "Status",
+  language: "Language",
+  locked: "Locked",
+  notFound: {
+    title: "Page Not Found",
+    description: "The page you are looking for does not exist.",
+    home: "Back to Home",
+  },
 
   nav: {
     home: "Home",
@@ -69,6 +76,9 @@ const en = {
     profile: "Profile",
     searchPlaceholder: "Search books, authors...",
     darkMode: "Dark mode",
+    lightMode: "Light mode",
+    light: "Light",
+    dark: "Dark",
     go: "Go",
   },
 
@@ -299,6 +309,7 @@ const en = {
 
   admin: {
     dashboard: "Dashboard",
+    adminRole: "Admin",
     manageBooks: "Manage Books",
     addBook: "Add Book",
     users: "Users",
@@ -311,6 +322,12 @@ const en = {
     totalReviews: "Total Reviews",
     totalRentals: "Active Rentals",
     recentBooks: "Recently Added Books",
+    importKyrgyzBooks: "Update 50-book collection",
+    importKyrgyzBooksTitle: "Update the book collection",
+    importKyrgyzBooksPrompt: "Add 50 well-known books, including Pollyanna and The Broken Sword. Books from the previous collection will be updated without changing their IDs; no covers are generated. Prices rotate between 300, 250, and 450 som.",
+    importKyrgyzBooksSuccess: "Complete: {added} added, {updated} updated, {skipped} already in the catalog.",
+    importKyrgyzBooksFailed: "Could not update the book collection. Check the connection and permissions.",
+    importingKyrgyzBooks: "Updating books...",
   },
 
   adminBooks: {
@@ -340,7 +357,7 @@ const en = {
     authorPlaceholder: "Author name",
     categoryLabel: "Category",
     categoryPlaceholder: "Select...",
-    priceLabel: "Баасы (сом)",
+    priceLabel: "Price (som)",
     pricePlaceholder: "500",
     ratingLabel: "Rating",
     descriptionLabel: "Description",
@@ -351,6 +368,9 @@ const en = {
     otherCategory: "Other",
     saving: "Saving...",
     uploading: "Uploading image...",
+    uploadingProgress: "Uploading...",
+    imageReady: "Image ready",
+    coverPreview: "Book cover preview",
     saveBook: "Save Book",
     addSuccess: "Book added successfully!",
     addFailed: "Failed to add book",

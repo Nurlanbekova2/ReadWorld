@@ -109,8 +109,12 @@ export default function AdminBooks() {
                       : <div className="w-10 h-13 bg-primary-50 dark:bg-primary-900/20 rounded-lg flex items-center justify-center"><FiBookOpen className="text-primary-500" /></div>
                     }
                   </td>
-                  <td className="px-5 py-3 font-medium text-gray-800 dark:text-dark-text line-clamp-2 max-w-[160px]">{book.title}</td>
-                  <td className="px-5 py-3 text-gray-500 dark:text-dark-muted max-w-[120px] truncate">{book.author}</td>
+                  <td className="px-5 py-3 font-medium text-gray-800 dark:text-dark-text max-w-[220px]">
+                    <div className="whitespace-normal break-words leading-5">{book.title}</div>
+                  </td>
+                  <td className="px-5 py-3 text-gray-500 dark:text-dark-muted max-w-[180px]">
+                    <div className="whitespace-normal break-words leading-5">{book.author}</div>
+                  </td>
                   <td className="px-5 py-3">
                     <span className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-300 whitespace-nowrap">{book.category || "—"}</span>
                   </td>

@@ -226,9 +226,9 @@ export default function Profile() {
                   {earnedBadges.map((badge) => {
                     const BadgeIcon = BADGE_ICONS[badge.id] || FiAward;
                     return (
-                      <div key={badge.id} title={badgeCopy[badge.id]?.desc || badge.desc} className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800/30">
+                      <div key={badge.id} title={badgeCopy[badge.id].desc} className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800/30">
                         <BadgeIcon className="text-yellow-600" size={16} />
-                        <span className="text-xs font-semibold text-yellow-700 dark:text-yellow-300">{badgeCopy[badge.id]?.label || badge.label}</span>
+                        <span className="text-xs font-semibold text-yellow-700 dark:text-yellow-300">{badgeCopy[badge.id].label}</span>
                       </div>
                     );
                   })}

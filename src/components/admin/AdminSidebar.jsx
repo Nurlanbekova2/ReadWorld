@@ -38,7 +38,7 @@ export default function AdminSidebar() {
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center">
               <FiBook className="text-white" size={16} />
             </div>
-            <span className="text-white font-bold text-sm">ReadWorld <span className="text-primary-400">Admin</span></span>
+            <span className="text-white font-bold text-sm">ReadWorld <span className="text-primary-400">{t.admin.adminRole}</span></span>
           </div>
         )}
         <button onClick={() => setCollapsed(!collapsed)} className="p-1.5 rounded-lg text-gray-400 hover:text-white hover:bg-gray-700 transition">
@@ -51,10 +51,10 @@ export default function AdminSidebar() {
         <div className="px-4 py-4 border-b border-gray-700">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-full bg-primary-600 flex items-center justify-center font-semibold text-white text-sm shrink-0">
-              {(userProfile?.name || "A")[0].toUpperCase()}
+              {(userProfile?.name || t.admin.adminRole)[0].toUpperCase()}
             </div>
             <div className="overflow-hidden">
-              <p className="text-white text-sm font-medium truncate">{userProfile?.name || "Admin"}</p>
+              <p className="text-white text-sm font-medium truncate">{userProfile?.name || t.admin.adminRole}</p>
               <p className="text-xs text-gray-400 truncate">{userProfile?.email}</p>
             </div>
           </div>

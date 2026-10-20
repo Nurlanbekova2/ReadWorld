@@ -9,7 +9,7 @@ const LANGS = [
 ];
 
 export default function LangAndTheme({ compact = false }) {
-  const { lang, changeLang } = useLang();
+  const { lang, changeLang, t } = useLang();
   const [dark, setDark] = useState(() => localStorage.getItem("theme") === "dark");
 
   useEffect(() => {
@@ -20,7 +20,7 @@ export default function LangAndTheme({ compact = false }) {
   return (
     <div className="flex items-center gap-0.5 bg-gray-100 dark:bg-dark-bg rounded-xl p-1">
       <label className="relative flex items-center">
-        <span className="sr-only">Language</span>
+        <span className="sr-only">{t.language}</span>
         <select
           value={lang}
           onChange={(event) => changeLang(event.target.value)}
@@ -39,7 +39,7 @@ export default function LangAndTheme({ compact = false }) {
       {/* Theme toggle */}
       <button
         onClick={() => setDark(!dark)}
-        title={dark ? "Light mode" : "Dark mode"}
+        title={dark ? t.nav.lightMode : t.nav.darkMode}
         className={
           "flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all duration-150 " +
           (dark
@@ -48,7 +48,7 @@ export default function LangAndTheme({ compact = false }) {
         }
       >
         {dark ? <FiSun size={14} /> : <FiMoon size={14} />}
-        {!compact && <span className="hidden sm:inline">{dark ? "Light" : "Dark"}</span>}
+        {!compact && <span className="hidden sm:inline">{dark ? t.nav.light : t.nav.dark}</span>}
       </button>
     </div>
   );

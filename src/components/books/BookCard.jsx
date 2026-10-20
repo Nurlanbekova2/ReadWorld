@@ -44,10 +44,10 @@ export default function BookCard({ book, isFav = false, onFavChange }) {
       <div className="flex h-full flex-col bg-white dark:bg-dark-surface rounded-2xl shadow-sm hover:shadow-xl border border-gray-100 dark:border-dark-border overflow-hidden transition-all duration-300 hover:-translate-y-1">
         <div className="relative aspect-[3/4] overflow-hidden bg-gray-100 dark:bg-dark-bg">
           {book.imageUrl ? (
-            <img src={book.imageUrl} alt={book.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+            <img src={book.imageUrl} alt={localizedBook.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
           ) : (
-            <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary-100 to-primary-200 dark:from-primary-900/30 dark:to-primary-800/30">
-              <FiBookOpen className="text-primary-500" size={36} aria-hidden="true" />
+            <div className="flex h-full items-center justify-center text-gray-300 dark:text-dark-muted">
+              <FiBookOpen size={48} aria-hidden="true" />
             </div>
           )}
           <button onClick={toggleFav} disabled={loading}
@@ -60,8 +60,12 @@ export default function BookCard({ book, isFav = false, onFavChange }) {
           )}
         </div>
         <div className="flex flex-1 flex-col p-4">
-          <h3 className="font-semibold text-gray-900 dark:text-dark-text line-clamp-1 group-hover:text-primary-600 transition-colors">{localizedBook.title}</h3>
-          <p className="text-sm text-gray-500 dark:text-dark-muted mt-0.5 line-clamp-1">{localizedBook.author}</p>
+          <h3 className="min-h-10 break-words text-sm font-semibold leading-5 text-gray-900 dark:text-dark-text group-hover:text-primary-600 transition-colors">
+            {localizedBook.title}
+          </h3>
+          <p className="mt-1 min-h-5 break-words text-xs leading-5 text-gray-500 dark:text-dark-muted">
+            {localizedBook.author}
+          </p>
           <div className="mt-2">
             <StarRating rating={book.rating || 0} size={13} showValue />
           </div>

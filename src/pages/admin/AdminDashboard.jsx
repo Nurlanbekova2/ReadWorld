@@ -6,7 +6,9 @@ import { getReviewsCount } from "../../services/reviewService";
 import { getActiveRentalsCount } from "../../services/rentalService";
 import { useLang } from "../../i18n/index.jsx";
 import { FiBook, FiUsers, FiMessageSquare, FiPlusCircle, FiArrowRight, FiBookOpen } from "react-icons/fi";
-import { format } from "date-fns";
+import { seedKyrgyzBooks } from "../../utils/seedData";
+import Modal from "../../components/ui/Modal";
+import toast from "react-hot-toast";
 
 function Skeleton({ className = "" }) {
   return <div className={"animate-pulse rounded-xl bg-gray-200 dark:bg-dark-border " + className} />;
@@ -49,10 +51,12 @@ function StatCard({ icon: Icon, label, value, color, bg, to }) {
 }
 
 export default function AdminDashboard() {
-  const { t } = useLang();
+  const { lang, t } = useLang();
   const [stats, setStats]         = useState({ books: null, users: null, reviews: null, rentals: null });
   const [recent, setRecent]       = useState([]);
   const [tableReady, setTableReady] = useState(false);
+  const [importOpen, setImportOpen] = useState(false);
+  const [importing, setImporting] = useState(false);
 
   useEffect(() => {
     // Each stat loads independently — one failure does not block others
@@ -77,6 +81,34 @@ export default function AdminDashboard() {
       .catch(() => setTableReady(true));
   }, []);
 
+  async function importKyrgyzBooks() {
+    setImporting(true);
+    try {
+      const { added, updated, skipped } = await seedKyrgyzBooks();
+      toast.success(
+        t.admin.importKyrgyzBooksSuccess
+          .replace("{added}", String(added))
+          .replace("{updated}", String(updated))
+          .replace("{skipped}", String(skipped))
+      );
+      getBooksCount()
+        .then((count) => setStats((current) => ({ ...current, books: count })))
+        .catch((error) => {
+          console.error("Could not refresh book count after import:", error);
+          setStats((current) => ({ ...current, books: "err" }));
+        });
+      getRecentBooks(5)
+        .then((books) => setRecent(books))
+        .catch((error) => console.error("Could not refresh recent books after import:", error));
+    } catch (error) {
+      console.error("Kyrgyz books import error:", error);
+      toast.error(t.admin.importKyrgyzBooksFailed);
+    } finally {
+      setImporting(false);
+      setImportOpen(false);
+    }
+  }
+
   return (
     <div className="animate-fade-in">
       <div className="flex items-center justify-between mb-8">
@@ -84,11 +116,31 @@ export default function AdminDashboard() {
           <h1 className="text-2xl font-bold text-gray-900 dark:text-dark-text">{t.admin.dashboard}</h1>
           <p className="text-sm text-gray-500 dark:text-dark-muted mt-1">{t.admin.welcomeBack}</p>
         </div>
-        <Link to="/admin/books/add"
-          className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-primary-600 hover:bg-primary-700 text-white text-sm font-semibold transition shadow-sm">
-          <FiPlusCircle size={16} /> {t.admin.addBook}
-        </Link>
+        <div className="flex flex-wrap justify-end gap-2">
+          <button type="button" onClick={() => setImportOpen(true)}
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-primary-200 dark:border-dark-border text-primary-700 dark:text-primary-300 hover:bg-primary-50 dark:hover:bg-dark-bg text-sm font-semibold transition">
+            <FiBook size={16} /> {t.admin.importKyrgyzBooks}
+          </button>
+          <Link to="/admin/books/add"
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-primary-600 hover:bg-primary-700 text-white text-sm font-semibold transition shadow-sm">
+            <FiPlusCircle size={16} /> {t.admin.addBook}
+          </Link>
+        </div>
       </div>
+
+      <Modal isOpen={importOpen} onClose={() => !importing && setImportOpen(false)} title={t.admin.importKyrgyzBooksTitle}>
+        <p className="text-sm text-gray-600 dark:text-dark-muted">{t.admin.importKyrgyzBooksPrompt}</p>
+        <div className="mt-5 flex justify-end gap-3">
+          <button type="button" onClick={() => setImportOpen(false)} disabled={importing}
+            className="rounded-xl border border-gray-200 px-4 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-gray-50 disabled:opacity-60 dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-bg">
+            {t.cancel}
+          </button>
+          <button type="button" onClick={importKyrgyzBooks} disabled={importing}
+            className="rounded-xl bg-primary-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-primary-700 disabled:opacity-60">
+            {importing ? t.admin.importingKyrgyzBooks : t.admin.importKyrgyzBooks}
+          </button>
+        </div>
+      </Modal>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
         <StatCard icon={FiBook}          label={t.admin.totalBooks}   value={stats.books}   color="text-primary-600" bg="bg-primary-50 dark:bg-primary-900/20"  to="/admin/books" />
@@ -127,8 +179,12 @@ export default function AdminDashboard() {
                           : <div className="w-9 h-12 bg-primary-50 dark:bg-primary-900/20 rounded-lg flex items-center justify-center"><FiBookOpen className="text-primary-500" /></div>
                         }
                       </td>
-                      <td className="px-6 py-3 font-medium text-gray-800 dark:text-dark-text line-clamp-1 max-w-[160px]">{book.title}</td>
-                      <td className="px-6 py-3 text-gray-500 dark:text-dark-muted">{book.author}</td>
+                      <td className="px-6 py-3 font-medium text-gray-800 dark:text-dark-text max-w-[240px]">
+                        <div className="whitespace-normal break-words leading-5">{book.title}</div>
+                      </td>
+                      <td className="px-6 py-3 text-gray-500 dark:text-dark-muted max-w-[220px]">
+                        <div className="whitespace-normal break-words leading-5">{book.author}</div>
+                      </td>
                       <td className="px-6 py-3">
                         <span className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-300">
                           {book.category || "-"}
@@ -139,7 +195,10 @@ export default function AdminDashboard() {
                       </td>
                       <td className="px-6 py-3 text-gray-400 text-xs">
                         {book.createdAt
-                          ? format(new Date(book.createdAt.seconds * 1000), "MMM d, yyyy")
+                          ? new Intl.DateTimeFormat(
+                              lang === "ky" ? "ky-KG" : lang === "ru" ? "ru-RU" : "en-US",
+                              { month: "short", day: "numeric", year: "numeric" }
+                            ).format(new Date(book.createdAt.seconds * 1000))
                           : "-"}
                       </td>
                     </tr>

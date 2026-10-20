@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { useLang } from "../../i18n/index.jsx";
 import { getUserFavorites } from "../../services/favoriteService";
-import { getBook } from "../../services/bookService";
+import { getBook, hideDuplicateBooks } from "../../services/bookService";
 import Spinner from "../../components/ui/Spinner";
 import BookCard from "../../components/books/BookCard";
 import { FiHeart } from "react-icons/fi";
@@ -19,7 +19,7 @@ export default function Favorites() {
     try {
       const favs = await getUserFavorites(currentUser.uid);
       const details = await Promise.all(favs.map((f) => getBook(f.bookId).catch(() => null)));
-      setBooks(details.filter(Boolean));
+      setBooks(hideDuplicateBooks(details.filter(Boolean)));
     } finally {
       setLoading(false);
     }

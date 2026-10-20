@@ -82,7 +82,7 @@ export default function BookForm({ defaultValues = {}, onSubmit, loading }) {
             {/* Preview or placeholder */}
             {imagePreview ? (
               <>
-                <img src={imagePreview} alt="Preview" className="w-full h-full object-cover" />
+                <img src={imagePreview} alt={t.bookForm.coverPreview} className="w-full h-full object-cover" />
                 {!uploading && (
                   <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 hover:opacity-100 transition">
                     <p className="text-white text-sm font-medium">{t.bookForm.clickToChange}</p>
@@ -120,7 +120,7 @@ export default function BookForm({ defaultValues = {}, onSubmit, loading }) {
                   />
                 </div>
                 <p className="text-white text-sm font-semibold">
-                  {uploadProgress > 0 ? uploadProgress + "%" : "Uploading..."}
+                  {uploadProgress > 0 ? uploadProgress + "%" : t.bookForm.uploadingProgress}
                 </p>
               </div>
             )}
@@ -138,7 +138,7 @@ export default function BookForm({ defaultValues = {}, onSubmit, loading }) {
 
           {uploadDone && !uploading && (
             <p className="text-xs text-green-600 dark:text-green-400 mt-2 flex items-center gap-1">
-              <FiCheck size={11} /> Image ready
+              <FiCheck size={11} /> {t.bookForm.imageReady}
             </p>
           )}
         </div>

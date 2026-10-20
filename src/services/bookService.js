@@ -1,11 +1,36 @@
 import {
   collection, addDoc, updateDoc, deleteDoc, doc,
   getDocs, getDoc, query, orderBy, where,
-  serverTimestamp, limit, getCountFromServer,
+  serverTimestamp, getCountFromServer,
 } from "firebase/firestore";
 import { db } from "../firebase/config";
 
 const COL = "books";
+
+export function hideDuplicateBooks(books) {
+  const seen = new Set();
+  return books.filter((book) => {
+    const author = book.author?.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLocaleLowerCase().trim();
+    if (!author) return true;
+
+    const titles = [
+      book.title,
+      ...Object.values(book.translations || {}).map((translation) => translation?.title),
+    ].filter(Boolean);
+    const keys = titles.map((title) => {
+      const normalizedTitle = title
+        .normalize("NFD")
+        .replace(/\p{Diacritic}/gu, "")
+        .toLocaleLowerCase()
+        .replace(/[^\p{L}\p{N}]/gu, "");
+      return `${normalizedTitle}|${author}`;
+    });
+
+    if (keys.some((key) => seen.has(key))) return false;
+    keys.forEach((key) => seen.add(key));
+    return true;
+  });
+}
 
 export async function addBook(data) {
   const ref = await addDoc(collection(db, COL), { ...data, createdAt: serverTimestamp() });
@@ -14,7 +39,7 @@ export async function addBook(data) {
 
 export async function getAllBooks() {
   const snap = await getDocs(query(collection(db, COL), orderBy("createdAt", "desc")));
-  return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+  return hideDuplicateBooks(snap.docs.map((d) => ({ id: d.id, ...d.data() })));
 }
 
 export async function getBook(id) {
@@ -24,17 +49,15 @@ export async function getBook(id) {
 }
 
 export async function getRecentBooks(n = 5) {
-  const snap = await getDocs(
-    query(collection(db, COL), orderBy("createdAt", "desc"), limit(n))
-  );
-  return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+  const snap = await getDocs(query(collection(db, COL), orderBy("createdAt", "desc")));
+  return hideDuplicateBooks(snap.docs.map((d) => ({ id: d.id, ...d.data() }))).slice(0, n);
 }
 
 export async function getBooksByCategory(category) {
   const snap = await getDocs(
     query(collection(db, COL), where("category", "==", category), orderBy("createdAt", "desc"))
   );
-  return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+  return hideDuplicateBooks(snap.docs.map((d) => ({ id: d.id, ...d.data() })));
 }
 
 export async function updateBook(id, data) {

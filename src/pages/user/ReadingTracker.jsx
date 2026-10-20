@@ -342,9 +342,9 @@ export default function ReadingTracker() {
               {earnedBadges.map((badge) => {
                 const BadgeIcon = BADGE_ICONS[badge.id] || FiAward;
                 return (
-                  <div key={badge.id} title={copy.badges[badge.id]?.desc || badge.desc} className="flex flex-col items-center gap-1 p-3 rounded-xl bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800/40 hover:scale-110 transition-transform cursor-default">
+                  <div key={badge.id} title={copy.badges[badge.id].desc} className="flex flex-col items-center gap-1 p-3 rounded-xl bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800/40 hover:scale-110 transition-transform cursor-default">
                     <BadgeIcon className="text-yellow-500" size={24} aria-hidden="true" />
-                    <span className="text-xs font-semibold text-yellow-700 dark:text-yellow-300 text-center leading-tight max-w-[65px]">{copy.badges[badge.id]?.label || badge.label}</span>
+                    <span className="text-xs font-semibold text-yellow-700 dark:text-yellow-300 text-center leading-tight max-w-[65px]">{copy.badges[badge.id].label}</span>
                   </div>
                 );
               })}
@@ -362,13 +362,13 @@ export default function ReadingTracker() {
               const earned = (stats?.badges || []).includes(badge.id);
               const BadgeIcon = BADGE_ICONS[badge.id] || FiAward;
               return (
-                <div key={badge.id} title={copy.badges[badge.id]?.desc || badge.desc}
+                <div key={badge.id} title={copy.badges[badge.id].desc}
                   className={"flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-medium border " + (earned
                     ? "bg-yellow-50 dark:bg-yellow-900/20 border-yellow-200 dark:border-yellow-800/40 text-yellow-700 dark:text-yellow-300"
                     : "bg-gray-50 dark:bg-dark-bg border-gray-100 dark:border-dark-border text-gray-400 opacity-50")}>
                   <BadgeIcon aria-hidden="true" />
-                  <span>{copy.badges[badge.id]?.label || badge.label}</span>
-                  {!earned && <FiLock className="text-gray-300" aria-label="Locked" />}
+                  <span>{copy.badges[badge.id].label}</span>
+                  {!earned && <FiLock className="text-gray-300" aria-label={t.locked} />}
                 </div>
               );
             })}

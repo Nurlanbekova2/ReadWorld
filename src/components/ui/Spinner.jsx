@@ -1,11 +1,14 @@
+import { useLang } from "../../i18n/index.jsx";
+
 export default function Spinner({ fullScreen = false, size = "md" }) {
+  const { t } = useLang();
   const sizes = { sm: "h-5 w-5", md: "h-8 w-8", lg: "h-12 w-12" };
 
   const spinner = (
     <div
       className={`animate-spin rounded-full border-4 border-primary-200 border-t-primary-600 ${sizes[size]}`}
       role="status"
-      aria-label="Loading"
+      aria-label={t.loading}
     />
   );
 

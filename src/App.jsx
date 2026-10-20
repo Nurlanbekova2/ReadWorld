@@ -1,8 +1,8 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { FiBookOpen } from "react-icons/fi";
 import { AuthProvider } from "./context/AuthContext";
-import { LangProvider } from "./i18n/index.jsx";
+import { LangProvider, useLang } from "./i18n/index.jsx";
 
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
@@ -39,12 +39,13 @@ function UserLayout({ children }) {
 }
 
 function NotFound() {
+  const { t } = useLang();
   return (
     <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-4">
       <FiBookOpen className="mb-4 text-primary-500" size={72} aria-hidden="true" />
-      <h1 className="text-3xl font-bold text-gray-800 dark:text-dark-text mb-2">Page Not Found</h1>
-      <p className="text-gray-500 dark:text-dark-muted mb-6">The page you are looking for does not exist.</p>
-      <a href="/" className="px-6 py-3 rounded-xl bg-primary-600 hover:bg-primary-700 text-white font-medium transition">Back to Home</a>
+      <h1 className="text-3xl font-bold text-gray-800 dark:text-dark-text mb-2">{t.notFound.title}</h1>
+      <p className="text-gray-500 dark:text-dark-muted mb-6">{t.notFound.description}</p>
+      <Link to="/" className="px-6 py-3 rounded-xl bg-primary-600 hover:bg-primary-700 text-white font-medium transition">{t.notFound.home}</Link>
     </div>
   );
 }

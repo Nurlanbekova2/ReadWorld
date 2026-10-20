@@ -102,6 +102,7 @@ export default function Books() {
     "Psychology": t.home.categories.psychology,
     "Philosophy": t.home.categories.philosophy,
     "Poetry":     t.home.categories.poetry,
+    "Other":      t.home.categories.other,
   };
 
   const load = useCallback(async () => {

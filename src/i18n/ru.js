@@ -55,6 +55,13 @@ const ru = {
   confirm: "Подтвердить",
   close: "Закрыть",
   status: "Статус",
+  language: "Язык",
+  locked: "Заблокировано",
+  notFound: {
+    title: "Страница не найдена",
+    description: "Страница, которую вы ищете, не существует.",
+    home: "На главную",
+  },
 
   nav: {
     home: "Главная",
@@ -69,6 +76,9 @@ const ru = {
     profile: "Профиль",
     searchPlaceholder: "Поиск книг, авторов...",
     darkMode: "Тёмная тема",
+    lightMode: "Светлая тема",
+    light: "Светлая",
+    dark: "Тёмная",
     go: "Найти",
   },
 
@@ -299,6 +309,7 @@ const ru = {
 
   admin: {
     dashboard: "Дашборд",
+    adminRole: "Администратор",
     manageBooks: "Управление книгами",
     addBook: "Добавить книгу",
     users: "Пользователи",
@@ -311,6 +322,12 @@ const ru = {
     totalReviews: "Всего отзывов",
     totalRentals: "Активных аренд",
     recentBooks: "Недавно добавленные книги",
+    importKyrgyzBooks: "Обновить подборку из 50 книг",
+    importKyrgyzBooksTitle: "Обновление подборки книг",
+    importKyrgyzBooksPrompt: "Добавить 50 известных книг, включая «Поллианну» и «Сломанный меч». Старые книги из предыдущей подборки будут обновлены без смены их ID; обложки не добавляются. Цены: 300, 250 и 450 сом по очереди.",
+    importKyrgyzBooksSuccess: "Готово: добавлено {added}, обновлено {updated}, уже было в каталоге {skipped}.",
+    importKyrgyzBooksFailed: "Не удалось импортировать книги. Проверьте подключение и права доступа.",
+    importingKyrgyzBooks: "Обновление книг...",
   },
 
   adminBooks: {
@@ -351,6 +368,9 @@ const ru = {
     otherCategory: "Другое",
     saving: "Сохранение...",
     uploading: "Загрузка изображения...",
+    uploadingProgress: "Загрузка...",
+    imageReady: "Изображение готово",
+    coverPreview: "Предпросмотр обложки книги",
     saveBook: "Сохранить книгу",
     addSuccess: "Книга успешно добавлена!",
     addFailed: "Ошибка при добавлении",

@@ -121,14 +121,14 @@ export async function updateStats(userId, pagesRead) {
 
 // ── Badge definitions ─────────────────────────────────────────────────────
 export const BADGE_DEFS = [
-  { id: "first_page",   emoji: "📖", label: "Первая страница",  desc: "Отметь первые страницы",     xpReq: 1,    streakReq: 0 },
-  { id: "week_streak",  emoji: "🔥", label: "7 дней подряд",    desc: "Читай 7 дней без перерыва",  xpReq: 0,    streakReq: 7 },
-  { id: "bookworm",     emoji: "🐛", label: "Книжный червь",    desc: "Набери 500 XP",              xpReq: 500,  streakReq: 0 },
-  { id: "reader_100",   emoji: "💯", label: "100 страниц",      desc: "Прочитай 100 страниц",       xpReq: 200,  streakReq: 0 },
-  { id: "month_streak", emoji: "🏆", label: "30 дней подряд",   desc: "Читай 30 дней без перерыва", xpReq: 0,    streakReq: 30 },
-  { id: "legend",       emoji: "👑", label: "Легенда",           desc: "Набери 5000 XP",             xpReq: 5000, streakReq: 0 },
-  { id: "night_owl",    emoji: "🦉", label: "Ночная сова",       desc: "Набери 1000 XP",             xpReq: 1000, streakReq: 0 },
-  { id: "consistent",   emoji: "⚡", label: "Постоянство",       desc: "Читай 14 дней подряд",       xpReq: 0,    streakReq: 14 },
+  { id: "first_page",   emoji: "📖", xpReq: 1,    streakReq: 0 },
+  { id: "week_streak",  emoji: "🔥", xpReq: 0,    streakReq: 7 },
+  { id: "bookworm",     emoji: "🐛", xpReq: 500,  streakReq: 0 },
+  { id: "reader_100",   emoji: "💯", xpReq: 200,  streakReq: 0 },
+  { id: "month_streak", emoji: "🏆", xpReq: 0,    streakReq: 30 },
+  { id: "legend",       emoji: "👑", xpReq: 5000, streakReq: 0 },
+  { id: "night_owl",    emoji: "🦉", xpReq: 1000, streakReq: 0 },
+  { id: "consistent",   emoji: "⚡", xpReq: 0,    streakReq: 14 },
 ];
 
 function calcBadges({ xp, streak }) {
